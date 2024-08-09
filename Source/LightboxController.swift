@@ -3,6 +3,7 @@ import UIKit
 public protocol LightboxControllerPageDelegate: AnyObject {
 
   func lightboxController(_ controller: LightboxController, didMoveToPage page: Int)
+  func lightboxController(_ controller: LightboxController, preloadCustomPageViewAtIndex index: Int)
 }
 
 public protocol LightboxControllerDismissalDelegate: AnyObject {
@@ -101,7 +102,7 @@ open class LightboxController: UIViewController {
       if currentPage == numberOfPages - 1 {
         seen = true
       }
-
+    
       reconfigurePagesForPreload()
 
       pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
@@ -252,7 +253,7 @@ open class LightboxController: UIViewController {
 
     for i in 0..<images.count {
         if let _ = images[i].fileURL, let customPageView = customPageView {
-            let pageView = PageViewCustom(customView: customPageView, image: preloadIndicies.contains(i) ? images[i] : LightboxImageStub())
+            let pageView = PageViewCustom(contentView: customPageView, image: preloadIndicies.contains(i) ? images[i] : LightboxImageStub())
             pageView.pageViewDelegate = self
 
             scrollView.addSubview(pageView)
@@ -276,11 +277,16 @@ open class LightboxController: UIViewController {
       let pageView = pageViews[i]
       if preloadIndicies.contains(i) {
         if type(of: pageView.image) == LightboxImageStub.self {
-          pageView.update(with: initialImages[i])
+            if type(of: pageView) == PageViewCustom.self {
+                pageDelegate?.lightboxController(self, preloadCustomPageViewAtIndex: i)
+                (pageView as! PageViewCustom).updateCustomView(image: initialImages[i], contentView: customPageView!)
+            } else {
+                pageView.update(with: initialImages[i])
+            }
         }
       } else {
         if type(of: pageView.image) != LightboxImageStub.self {
-          pageView.update(with: LightboxImageStub())
+            pageView.update(with: LightboxImageStub())
         }
       }
     }

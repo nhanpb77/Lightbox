@@ -10,11 +10,13 @@ import Foundation
 import UIKit
 
 class PageViewCustom: PageView {
-    var customView: UIView
-    init(customView: UIView, image: LightboxImage) {
-        self.customView = customView
+    var contentView: UIView?
+    init(contentView: UIView, image: LightboxImage) {
+        self.contentView = contentView
         super.init(image: image, frame: .zero)
-        addSubview(self.customView)
+        if let _ = self.contentView {
+            addSubview(self.contentView!)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -23,6 +25,19 @@ class PageViewCustom: PageView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.customView.frame = bounds
+        if let _ = contentView {
+            self.contentView!.frame = bounds
+        }
+    }
+    
+    func updateCustomView(image: LightboxImage, contentView: UIView) {
+        self.image = image
+        if let _ = self.contentView {
+            self.contentView!.removeFromSuperview()
+        }
+        self.contentView = contentView
+        if let _ = self.contentView {
+            addSubview(self.contentView!)
+        }
     }
 }

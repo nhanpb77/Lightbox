@@ -2,8 +2,7 @@ import UIKit
 import Lightbox
 import SDWebImage
 
-class ViewController: UIViewController {
-  
+class ViewController: UIViewController, LightboxControllerPageDelegate {
   lazy var showButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.addTarget(self, action: #selector(showLightbox), for: .touchUpInside)
@@ -38,7 +37,11 @@ class ViewController: UIViewController {
             LightboxImage(imageURL: URL(string: "https://media.giphy.com/media/Ku65904QQe4yez448B/giphy.gif")!),
             LightboxImage(imageURL: URL(string: "https://media.giphy.com/media/lQDLwWUMPaAHvh8pAG/giphy.gif")!),
             LightboxImage(imageURL: URL(string: "https://media.giphy.com/media/ontKwPWJxARsuKaKqJ/giphy.gif")!),
+            
             LightboxImage(fileURL: URL(string: "https://media.giphy.com/media/ontKwPWJxARsuKaKqJ/giphy.gif")!),
+            LightboxImage(fileURL: URL(string: "https://media.giphy.com/media/ontKwPWJxARsuKaKqJ/giphy.gif")!),
+            LightboxImage(fileURL: URL(string: "https://media.giphy.com/media/ontKwPWJxARsuKaKqJ/giphy.gif")!),
+            
             LightboxImage(
                 image: UIImage(named: "photo1")!,
                 text: "Photography is the science, art, application and practice of creating durable images by recording light or other electromagnetic radiation, either electronically by means of an image sensor, or chemically by means of a light-sensitive material such as photographic film"
@@ -58,12 +61,29 @@ class ViewController: UIViewController {
             ),
             LightboxImage(imageURL: URL(string: "https://c.tenor.com/kccsHXtdDn0AAAAC/alcohol-wine.gif")!)
         ]
-        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
+        let customView = UIView()
         customView.backgroundColor = .red
         let controller = LightboxController(images: images, customPageView: customView)
         controller.dynamicBackground = true
+        controller.pageDelegate = self
         
         present(controller, animated: true, completion: nil)
+    }
+    
+    func lightboxController(_ controller: Lightbox.LightboxController, didMoveToPage page: Int) {
+
+    }
+    
+    func lightboxController(_ controller: LightboxController, preloadCustomPageViewAtIndex index: Int) {
+        let view = UIView()
+        if index == 3 {
+            view.backgroundColor = .green
+        } else if index == 4 {
+            view.backgroundColor = .blue
+        } else if index == 5 {
+            view.backgroundColor = .white
+        }
+        controller.customPageView = view
     }
 }
 
