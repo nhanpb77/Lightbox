@@ -5,6 +5,7 @@ open class LightboxImage {
   open fileprivate(set) var image: UIImage?
   open fileprivate(set) var imageURL: URL?
   open fileprivate(set) var videoURL: URL?
+  open fileprivate(set) var fileURL: URL?
   open fileprivate(set) var imageClosure: (() -> UIImage)?
   open var text: String
 
@@ -25,6 +26,13 @@ open class LightboxImage {
     self.text = text
     self.videoURL = videoURL
   }
+    
+  public init(fileURL: URL, text: String = "") {
+      self.imageURL = nil
+      self.text = text
+      self.videoURL = nil
+      self.fileURL = fileURL
+   }
 
   public init(imageClosure: @escaping () -> UIImage, text: String = "", videoURL: URL? = nil) {
     self.imageClosure = imageClosure

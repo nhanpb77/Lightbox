@@ -38,6 +38,7 @@ class ViewController: UIViewController {
             LightboxImage(imageURL: URL(string: "https://media.giphy.com/media/Ku65904QQe4yez448B/giphy.gif")!),
             LightboxImage(imageURL: URL(string: "https://media.giphy.com/media/lQDLwWUMPaAHvh8pAG/giphy.gif")!),
             LightboxImage(imageURL: URL(string: "https://media.giphy.com/media/ontKwPWJxARsuKaKqJ/giphy.gif")!),
+            LightboxImage(fileURL: URL(string: "https://media.giphy.com/media/ontKwPWJxARsuKaKqJ/giphy.gif")!),
             LightboxImage(
                 image: UIImage(named: "photo1")!,
                 text: "Photography is the science, art, application and practice of creating durable images by recording light or other electromagnetic radiation, either electronically by means of an image sensor, or chemically by means of a light-sensitive material such as photographic film"
@@ -57,8 +58,9 @@ class ViewController: UIViewController {
             ),
             LightboxImage(imageURL: URL(string: "https://c.tenor.com/kccsHXtdDn0AAAAC/alcohol-wine.gif")!)
         ]
-        
-        let controller = LightboxController(images: images)
+        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
+        customView.backgroundColor = .red
+        let controller = LightboxController(images: images, customPageView: customView)
         controller.dynamicBackground = true
         
         present(controller, animated: true, completion: nil)

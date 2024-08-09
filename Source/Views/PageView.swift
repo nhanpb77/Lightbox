@@ -57,6 +57,11 @@ class PageView: UIScrollView {
   }
 
   // MARK: - Initializers
+    
+   init(image: LightboxImage, frame: CGRect) {
+        self.image = image
+        super.init(frame: frame)
+   }
 
   init(image: LightboxImage) {
     self.image = image

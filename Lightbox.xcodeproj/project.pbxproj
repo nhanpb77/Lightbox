@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,6 +29,7 @@
 		D573A2F51C5B5CA4006053DD /* LightboxTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2F41C5B5CA4006053DD /* LightboxTransition.swift */; };
 		D573A2F71C5B5E55006053DD /* UIView+Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2F61C5B5E55006053DD /* UIView+Gradient.swift */; };
 		D58A18CB1C5ABF8F000024BB /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58A18CA1C5ABF8F000024BB /* FooterView.swift */; };
+		FE0619112C661EC40071A82C /* PageViewCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0619102C661EC40071A82C /* PageViewCustom.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		D573A2F41C5B5CA4006053DD /* LightboxTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxTransition.swift; sourceTree = "<group>"; };
 		D573A2F61C5B5E55006053DD /* UIView+Gradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Gradient.swift"; sourceTree = "<group>"; };
 		D58A18CA1C5ABF8F000024BB /* FooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
+		FE0619102C661EC40071A82C /* PageViewCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewCustom.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 		D54DFCBB1C5AAAD600ADEA0E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FE0619102C661EC40071A82C /* PageViewCustom.swift */,
 				D56F15C71E0AB79800F128AF /* LoadingIndicator.swift */,
 				D573A2EF1C5B5605006053DD /* HeaderView.swift */,
 				D58A18CA1C5ABF8F000024BB /* FooterView.swift */,
@@ -337,6 +340,7 @@
 				D573A2F01C5B5605006053DD /* HeaderView.swift in Sources */,
 				D573A2F51C5B5CA4006053DD /* LightboxTransition.swift in Sources */,
 				D2258CC4215CD035005A9A1C /* Color+Extensions.swift in Sources */,
+				FE0619112C661EC40071A82C /* PageViewCustom.swift in Sources */,
 				166E3BA920333E04006799C1 /* LightboxImageStub.swift in Sources */,
 				D2D71BBC1D54DA77006AB907 /* AssetManager.swift in Sources */,
 			);

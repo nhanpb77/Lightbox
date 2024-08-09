@@ -158,6 +158,7 @@ open class LightboxController: UIViewController {
 
   lazy var transitionManager: LightboxTransition = LightboxTransition()
   var pageViews = [PageView]()
+  open var customPageView: UIView? = nil
   var statusBarHidden = false
 
   fileprivate var initialImages: [LightboxImage]
@@ -165,9 +166,10 @@ open class LightboxController: UIViewController {
 
   // MARK: - Initializers
 
-  public init(images: [LightboxImage] = [], startIndex index: Int = 0) {
+    public init(images: [LightboxImage] = [], startIndex index: Int = 0, customPageView: UIView? = nil) {
     self.initialImages = images
     self.initialPage = index
+    self.customPageView = customPageView
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -249,11 +251,19 @@ open class LightboxController: UIViewController {
     let preloadIndicies = calculatePreloadIndicies()
 
     for i in 0..<images.count {
-      let pageView = PageView(image: preloadIndicies.contains(i) ? images[i] : LightboxImageStub())
-      pageView.pageViewDelegate = self
+        if let _ = images[i].fileURL, let customPageView = customPageView {
+            let pageView = PageViewCustom(customView: customPageView, image: preloadIndicies.contains(i) ? images[i] : LightboxImageStub())
+            pageView.pageViewDelegate = self
 
-      scrollView.addSubview(pageView)
-      pageViews.append(pageView)
+            scrollView.addSubview(pageView)
+            pageViews.append(pageView)
+        } else {
+            let pageView = PageView(image: preloadIndicies.contains(i) ? images[i] : LightboxImageStub())
+            pageView.pageViewDelegate = self
+
+            scrollView.addSubview(pageView)
+            pageViews.append(pageView)
+        }
     }
 
     configureLayout(view.bounds.size)
