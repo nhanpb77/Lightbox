@@ -35,6 +35,7 @@ class ViewController: UIViewController, LightboxControllerPageDelegate {
     @objc func showLightbox() {
         let images = [
             LightboxImage(imageURL: URL(string: "https://media.giphy.com/media/Ku65904QQe4yez448B/giphy.gif")!),
+            LightboxImage(fileURL: URL(string: "https://media.giphy.com/media/ontKwPWJxARsuKaKqJ/giphy.gif")!),
             LightboxImage(imageURL: URL(string: "https://media.giphy.com/media/lQDLwWUMPaAHvh8pAG/giphy.gif")!),
             LightboxImage(imageURL: URL(string: "https://media.giphy.com/media/ontKwPWJxARsuKaKqJ/giphy.gif")!),
             
@@ -63,7 +64,10 @@ class ViewController: UIViewController, LightboxControllerPageDelegate {
         ]
         let customView = UIView()
         customView.backgroundColor = .red
-        let controller = LightboxController(images: images, customPageView: customView)
+        let controller = LightboxController()
+        controller.customPageView = customView
+        controller.images = images
+        controller.goTo(1, animated: true)
         controller.dynamicBackground = true
         controller.pageDelegate = self
         
@@ -76,11 +80,13 @@ class ViewController: UIViewController, LightboxControllerPageDelegate {
     
     func lightboxController(_ controller: LightboxController, preloadCustomPageViewAtIndex index: Int) {
         let view = UIView()
-        if index == 3 {
+        if index == 1 {
+            view.backgroundColor = .red
+        }else if index == 4 {
             view.backgroundColor = .green
-        } else if index == 4 {
-            view.backgroundColor = .blue
         } else if index == 5 {
+            view.backgroundColor = .blue
+        } else if index == 6 {
             view.backgroundColor = .white
         }
         controller.customPageView = view

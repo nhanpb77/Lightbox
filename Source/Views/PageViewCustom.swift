@@ -30,7 +30,7 @@ class PageViewCustom: PageView {
         }
     }
     
-    func updateCustomView(image: LightboxImage, contentView: UIView) {
+    func updateCustomView(image: LightboxImage, contentView: UIView?) {
         self.image = image
         if let _ = self.contentView {
             self.contentView!.removeFromSuperview()

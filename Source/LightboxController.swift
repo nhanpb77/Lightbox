@@ -272,21 +272,24 @@ open class LightboxController: UIViewController {
 
   func reconfigurePagesForPreload() {
     let preloadIndicies = calculatePreloadIndicies()
-
     for i in 0..<initialImages.count {
       let pageView = pageViews[i]
       if preloadIndicies.contains(i) {
-        if type(of: pageView.image) == LightboxImageStub.self {
-            if type(of: pageView) == PageViewCustom.self {
-                pageDelegate?.lightboxController(self, preloadCustomPageViewAtIndex: i)
-                (pageView as! PageViewCustom).updateCustomView(image: initialImages[i], contentView: customPageView!)
-            } else {
-                pageView.update(with: initialImages[i])
-            }
-        }
+          if type(of: pageView) == PageViewCustom.self {
+              pageDelegate?.lightboxController(self, preloadCustomPageViewAtIndex: i)
+              (pageView as! PageViewCustom).updateCustomView(image: initialImages[i], contentView: customPageView!)
+          } else {
+              if type(of: pageView.image) == LightboxImageStub.self {
+                  pageView.update(with: initialImages[i])
+              }
+          }
       } else {
         if type(of: pageView.image) != LightboxImageStub.self {
-            pageView.update(with: LightboxImageStub())
+            if type(of: pageView) == PageViewCustom.self {
+                (pageView as! PageViewCustom).updateCustomView(image: LightboxImageStub(), contentView: nil)
+            } else {
+                pageView.update(with: LightboxImageStub())
+            }
         }
       }
     }
