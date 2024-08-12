@@ -11,9 +11,18 @@ class ViewController: UIViewController, LightboxControllerPageDelegate {
     button.titleLabel?.font = UIFont(name: "AvenirNextCondensed-DemiBold", size: 30)
     button.frame = UIScreen.main.bounds
     button.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]
-    
     return button
   }()
+    
+    lazy var indexTf: UITextField = { [unowned self] in
+        let tf = UITextField()
+        tf.text = "0"
+        tf.borderStyle = .roundedRect
+        tf.keyboardType = .numberPad
+        let screenBounds = UIScreen.main.bounds
+        tf.frame = CGRect(x: 100, y: screenBounds.height / 2 - 100, width: screenBounds.width - 200, height: 30)
+        return tf
+    }()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -21,6 +30,7 @@ class ViewController: UIViewController, LightboxControllerPageDelegate {
     view.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]
     view.backgroundColor = UIColor.white
     view.addSubview(showButton)
+    view.addSubview(indexTf)
     title = "Lightbox"
     LightboxConfig.preload = 2
     LightboxConfig.loadImage = { imageView, url, completion in
@@ -60,17 +70,23 @@ class ViewController: UIViewController, LightboxControllerPageDelegate {
                 image: UIImage(named: "photo3")!,
                 text: "A lightbox is a translucent surface illuminated from behind, used for situations where a shape laid upon the surface needs to be seen with high contrast."
             ),
-            LightboxImage(imageURL: URL(string: "https://c.tenor.com/kccsHXtdDn0AAAAC/alcohol-wine.gif")!)
+            LightboxImage(imageURL: URL(string: "https://c.tenor.com/kccsHXtdDn0AAAAC/alcohol-wine.gif")!),
+            LightboxImage(fileURL: URL(string: "https://media.giphy.com/media/ontKwPWJxARsuKaKqJ/giphy.gif")!),
+            LightboxImage(fileURL: URL(string: "https://media.giphy.com/media/ontKwPWJxARsuKaKqJ/giphy.gif")!),
+            LightboxImage(fileURL: URL(string: "https://media.giphy.com/media/ontKwPWJxARsuKaKqJ/giphy.gif")!)
         ]
         let customView = UIView()
         customView.backgroundColor = .red
         let controller = LightboxController()
+        controller.pageDelegate = self
         controller.customPageView = customView
         controller.images = images
-        controller.goTo(1, animated: true)
+        var index = 0
+        if let myNumber = NumberFormatter().number(from: indexTf.text ?? "0") {
+            index = myNumber.intValue
+        }
+        controller.goTo(index, animated: true)
         controller.dynamicBackground = true
-        controller.pageDelegate = self
-        
         present(controller, animated: true, completion: nil)
     }
     
@@ -78,7 +94,7 @@ class ViewController: UIViewController, LightboxControllerPageDelegate {
 
     }
     
-    func lightboxController(_ controller: LightboxController, preloadCustomPageViewAtIndex index: Int) {
+    func lightboxController(_ controller: Lightbox.LightboxController, preloadCustomPageViewAtIndex index: Int, completed: (UIView) -> Void) {
         let view = UIView()
         if index == 1 {
             view.backgroundColor = .red
@@ -88,8 +104,14 @@ class ViewController: UIViewController, LightboxControllerPageDelegate {
             view.backgroundColor = .blue
         } else if index == 6 {
             view.backgroundColor = .white
+        }else if index == 12 {
+            view.backgroundColor = .green
+        } else if index == 13 {
+            view.backgroundColor = .blue
+        } else if index == 14 {
+            view.backgroundColor = .white
         }
-        controller.customPageView = view
+        completed(view)
     }
 }
 
